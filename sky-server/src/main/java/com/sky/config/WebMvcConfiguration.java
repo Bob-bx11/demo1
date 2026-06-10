@@ -3,6 +3,7 @@ package com.sky.config;
 import com.sky.interceptor.JwtTokenAdminInterceptor;
 import com.sky.json.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,15 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Autowired
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
+
+
+    @Value("${file.upload.local-path}")
+    private String localPath;
+
+    @Value("${file.upload.access-path}")
+    private String accessPath;
+
+
 
     /**
      * 注册自定义拦截器
@@ -66,9 +76,16 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * 设置静态资源映射
      * @param registry
      */
+
+    @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 接口文档
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        // ====================== 关键修改：本地图片映射 ======================
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("file:D:/IDEA/NBX/XiangMu/images/");
     }
 
     /*

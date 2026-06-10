@@ -37,3 +37,15 @@ sky:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+
+
+# 本地上传 → 专门放到 images 文件夹
+file:
+  upload:
+    # Windows：D盘下 images 文件夹
+    local-path: D:/IDEA/NBX/XiangMu/images/
+    # Linux/Mac：
+    # local-path: /home/sky-files/images/
+
+    # 浏览器访问前缀（数据库存这个）
+    access-path: /images/
