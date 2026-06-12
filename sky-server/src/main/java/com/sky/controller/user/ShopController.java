@@ -1,4 +1,4 @@
-package com.sky.controller.admin;
+package com.sky.controller.user;
 
 import com.sky.result.Result;
 import io.swagger.annotations.Api;
@@ -11,36 +11,22 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 店铺状态管理
  */
-@RestController("adminShopController")
-@RequestMapping("/admin/shop")
+@RestController("userShopController")
+@RequestMapping("/user/shop")
 @Api(tags = "店铺相关接口")
 @Slf4j
 public class ShopController {
 
     public static final String key = "SHOP_STATUS";
 
-    // 注入时也指定泛型，避免类型擦除
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
-
-    @PutMapping("/{status}")
-    @ApiOperation("设置店铺营业状态")
-    public Result setStatus(@PathVariable Integer status) {
-        //  必须把 Integer 转为 String 再存入
-        redisTemplate.opsForValue().set(key, status.toString());
-        return Result.success();
-    }
 
     @GetMapping("/status")
     @ApiOperation("获取店铺营业状态")
     public Result<Integer> getStatus() {
-        // 取出的是 String，再转为 Integer
         String statusStr = redisTemplate.opsForValue().get(key);
         Integer status = statusStr != null ? Integer.valueOf(statusStr) : 0;
         return Result.success(status);
     }
 }
-
-
-
-

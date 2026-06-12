@@ -1,7 +1,6 @@
 package com.sky.mapper;
 
 import com.sky.annotation.AutoFill;
-import com.sky.controller.admin.ShopController;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
@@ -48,24 +47,39 @@ public interface DishMapper {
     void insert(Dish dish);
 
     /*
-    * 根据主键查询数据
-    * */
+     * 根据主键查询数据
+     * */
     @Select("select * from dish where id = #{id}")
     Dish getById(Long id);
 
     /*
-    * 根据菜品 id 删除菜品数据
-    * */
+     * 根据菜品 id 删除菜品数据
+     * */
     @Delete("delete from dish where id = #{id}")
     void deleteById(Long id);
 
     /*
-    * 删除多条菜品数据
-    * */
+     * 删除多条菜品数据
+     * */
     void deleteByIds(List<Long> ids);
 
     // 更新菜品主表
     @AutoFill(OperationType.UPDATE)
     void update(Dish dish);
-}
 
+
+    /**
+     * 动态条件查询菜品
+     * @param dish
+     * @return
+     */
+    List<Dish> list(Dish dish);
+
+    /**
+     * 根据套餐id查询菜品
+     * @param setmealId
+     * @return
+     */
+    @Select("select a.* from dish a left join setmeal_dish b on a.id = b.dish_id where b.setmeal_id = #{setmealId}")
+    List<Dish> getBySetmealId(Long setmealId);
+}

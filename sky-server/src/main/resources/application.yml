@@ -13,6 +13,13 @@ spring:
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
 
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+    password:
+    database: ${sky.redis.database}
+
+
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
@@ -37,6 +44,16 @@ sky:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+
+    # 用户端令牌
+    user-secret-key: itheima
+    user-ttl: 7200000
+    user-token-name: authentication
+
+
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
 
 
 # 本地上传 → 专门放到 images 文件夹
